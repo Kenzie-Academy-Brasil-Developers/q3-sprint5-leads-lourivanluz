@@ -4,7 +4,7 @@ import os
 
 db = SQLAlchemy()
 
-def init_app(app:Flask):
+def init_app(app:Flask) -> None:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

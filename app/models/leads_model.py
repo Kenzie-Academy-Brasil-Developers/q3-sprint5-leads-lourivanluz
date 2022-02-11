@@ -8,7 +8,7 @@ class Leads(db.Model):
 
     __tablename__ = 'tb_leads'
      
-    id:str = Column(Integer,primary_key=True)
+    id = Column(Integer,primary_key=True)
     name:str = Column(String,nullable=False)
     email:str = Column(String,nullable=False,unique=True)
     phone:str = Column(String,nullable=False)
