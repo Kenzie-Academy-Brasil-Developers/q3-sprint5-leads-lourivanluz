@@ -10,7 +10,7 @@ O objetivo principal e fazer o CRUD de cada lead, o usuario podera criar, ler, e
 
 `GET /leads`
 
-    http://127.0.0.1:5000/leads
+    https://api-crud-leads.herokuapp.com/leads
 
 ### Response
 
@@ -31,7 +31,7 @@ O objetivo principal e fazer o CRUD de cada lead, o usuario podera criar, ler, e
 
 `POST /leads`
 
-    http:http://127.0.0.1:5000/leads
+    http:https://api-crud-leads.herokuapp.com/leads
 
 #### Body
 
@@ -99,9 +99,9 @@ O objetivo principal e fazer o CRUD de cada lead, o usuario podera criar, ler, e
 
 #### Request
 
-`PUT /leads`
+`PATH /leads`
 
-    http:http://127.0.0.1:5000/leads
+    http:https://api-crud-leads.herokuapp.com/leads
 
 #### Body
 
@@ -160,7 +160,7 @@ O objetivo principal e fazer o CRUD de cada lead, o usuario podera criar, ler, e
 
 `DELETE /leads`
 
-    http:http://127.0.0.1:5000/leads
+    http:https://api-crud-leads.herokuapp.com/leads
 
 #### Body
 
