@@ -1,18 +1,211 @@
-# Leads
+# API para controle de leads
 
+Lead: São pessoas que podem estar interessados em algum tipo de produto ou serviço. Esses possíveis futuros clientes podem ser coletados através de preenchimento de formulários ou cliques em páginas da internet, os dados geralmente são utilizados em campanhas publicitárias.
 
-| Critérios | Pts. |
-|---|---|
-| Utilizar **SQLAlchemy**, **Dataclass**, **Blueprint**, **Migrations** e **Padrão Flask Factory** corretamente. | 1 |
-| [GET] **/leads** - Rota funcionando e ordenada de acordo com o enunciado. | 1 |
-| [GET] **/leads** - [ERRO] Nenhum dado encontrado. | 0.5 |
-| [POST] **/leads** - Rota funcionando de acordo com o enunciado. | 1 |
-| [POST] **/leads** - [ERRO] E-mail e telefone únicos. | 0.5 |
-| [POST] **/leads** - [ERRO] Telefone obrigatoriamente no formato (xx)xxxxx-xxxx. | 0.5 |
-| [PATCH] **/leads** - Rota funcionando de acordo com o enunciado. | 2 |
-| [PATCH] **/leads** - [ERRO] - Corpo da requisição obrigatoriamente apenas com email e deve ser uma string; | 0.5 |
-| [PATCH] **/leads** - [ERRO] - Nenhum dado encontrado. | 0.5 |
-| [DELETE] **/leads** - Rota funcionando de acordo com o enunciado. | 1 |
-| [DELETE] **/leads** - [ERRO] - Corpo da requisição obrigatoriamente apenas com email e deve ser uma string; | 0.5 |
-| [DELETE] **/leads** - [ERRO] - Nenhum dado encontrado. | 0.5 |
-| Arquivos **requirements.txt**, **.env**, **.env.example** e **.gitignore** (**venv** e **.env** adicionados) | 0.5 |
+O objetivo principal e fazer o CRUD de cada lead, o usuario podera criar, ler, editar e excluir a lead caso deseje.
+
+## Buscar por todas leads
+
+### Request
+
+`GET /leads`
+
+    http://127.0.0.1:5000/leads
+
+### Response
+
+    [
+        {
+            "name": "John Doe",
+            "email": "john@emsil.com",
+            "phone": "(41)90020-0000",
+            "creation_date": "Fri, 11 Feb 2022 12:36:10 GMT",
+            "last_visit": "Fri, 11 Feb 2022 12:36:10 GMT",
+            "visits": 1
+        }
+    ]
+
+## Criar uma lead
+
+#### Request
+
+`POST /leads`
+
+    http:http://127.0.0.1:5000/leads
+
+#### Body
+
+    {
+    "name": "John Doe",
+    "email": "john@email.com",
+    "phone": "(41)90000-0000"
+    }
+
+#### Response
+
+    {
+        "name": "John Doe",
+        "email": "john@email.com",
+        "phone": "(41)90000-0000",
+        "creation_date": "Fri, 10 Sep 2021 17:53:25 GMT",
+        "last_visit": "Fri, 10 Sep 2021 17:53:25 GMT",
+        "visits": 1
+    }
+
+## Tipo de erros ao criar uma lead
+
+### ValueError caso telefone não esteja no formato adequado
+
+#### Request
+
+    {
+    "name": "John Doe",
+    "email": "john@email.com",
+    "phone": "41900000000"
+    }
+
+#### Response
+
+    {"error": "O campo Phone deve ser no formato (xx)xxxxx-xxxx"}
+
+### KeyError caso phone, name ou email não seja passado.
+
+#### Request
+
+    {
+    "name": "John Doe",
+    "phone": "(41)90000-0000"
+    }
+
+#### Response
+
+    {"error": "Os campos 'name, email, phone' são obrigatórios"}
+
+### IntegrityError caso o email já conste no sistema
+
+#### Request
+
+    {
+    "name": "John Doe",
+    "email": "john@email.com",
+    "phone": "(41)90000-0000"
+    }
+
+#### Response
+
+    {"error": "esse email já está cadastrado"}
+
+## Atualizar a visita da lead
+
+#### Request
+
+`PUT /leads`
+
+    http:http://127.0.0.1:5000/leads
+
+#### Body
+
+    {
+    "email": "john@email.com"
+    }
+
+#### Response
+
+    {
+        "name": "John Doe",
+        "email": "john@emsil.com",
+        "phone": "(41)90020-0000",
+        "creation_date": "Fri, 11 Feb 2022 12:36:10 GMT",
+        "last_visit": "Wed, 23 Feb 2022 19:19:36 GMT",
+        "visits": 2
+    }
+
+## Tipo de erros ao tentar atualizar uma lead
+
+### NoResultFound caso o email não for encontrado
+
+#### Request
+
+    {
+    "email": "jonathan@email.com",
+    }
+
+#### Response
+
+    {"error": "o Email informado não foi encontrado"}
+
+### KeyError caso o email não for passado
+
+#### Request
+
+    {
+    "emayl": "john@email.com",
+    }
+
+#### Response
+
+    {"error": "O campo email é obrigatório"}
+
+### FormatError caso o email passado não for string
+
+#### Request
+
+    {
+    "email": 1,
+    }
+
+#### Response
+
+    {"error": "Formato esperado {'email':string}"}
+
+`DELETE /leads`
+
+    http:http://127.0.0.1:5000/leads
+
+#### Body
+
+    {
+    "email": "john@email.com"
+    }
+
+#### Response
+
+    NO RESPONSE
+
+## Tipo de erros ao tentar Deletar uma lead
+
+### NoResultFound caso o email não for encontrado
+
+#### Request
+
+    {
+    "email": "jonathan@email.com",
+    }
+
+#### Response
+
+    {"error": "o Email informado não foi encontrado"}
+
+### KeyError caso o email não for passado
+
+#### Request
+
+    {
+    "emayl": "john@email.com",
+    }
+
+#### Response
+
+    {"error": "O campo email é obrigatório"}
+
+### FormatError caso o email passado não for string
+
+#### Request
+
+    {
+    "email": 1,
+    }
+
+#### Response
+
+    {"error": "Formato esperado {'email':string}"}

@@ -30,7 +30,7 @@ def create_lead():
                 return jsonify(new_lead),HTTPStatus.CREATED
         
             except IntegrityError:
-                return {"error": "Os campos phone e email são unicos"},HTTPStatus.CONFLICT
+                return {"error": "esse email já está cadastrado"},HTTPStatus.CONFLICT
     except ValueError:
         return {"error": "O campo Phone deve ser no formato (xx)xxxxx-xxxx"},HTTPStatus.BAD_REQUEST
     except KeyError:
